@@ -1512,7 +1512,38 @@ body {
   }
   
   .landing-container {
-    padding: 20px;
+    padding: 0;
+  }
+
+  /* Split screen becomes stacked on mobile */
+  .split-screen-layout {
+    flex-direction: column;
+  }
+
+  .hero-section {
+    padding: 40px 20px;
+    order: 2;
+  }
+
+  .spline-container {
+    order: 1;
+    height: 300px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .spline-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: none;
+    top: auto;
+    left: auto;
+  }
+
+  .spline-overlay {
+    bottom: 20px;
+    right: 20px;
+    padding: 16px;
   }
   
   .hero-greeting {
@@ -1525,15 +1556,25 @@ body {
   
   .hero-description {
     font-size: 16px;
+    max-width: none;
   }
   
   .floating-nav-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: none;
   }
   
   .floating-nav-card {
-    padding: 24px 20px;
+    padding: 16px 12px;
+  }
+
+  .card-title {
+    font-size: 14px;
+  }
+
+  .card-description {
+    font-size: 11px;
   }
   
   .about-content {
@@ -1582,8 +1623,12 @@ body {
     font-size: 20px;
   }
   
+  .floating-nav-grid {
+    grid-template-columns: 1fr;
+  }
+  
   .floating-nav-card {
-    padding: 20px 16px;
+    padding: 16px;
   }
   
   .section-title {
@@ -1597,5 +1642,9 @@ body {
   .card-front,
   .card-back {
     padding: 24px;
+  }
+
+  .spline-container {
+    height: 250px;
   }
 }
