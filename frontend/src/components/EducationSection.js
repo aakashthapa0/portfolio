@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { education, certifications } from "../data/mock";
 import { GraduationCap, Award, MapPin, Calendar } from "lucide-react";
+import Spline from '@splinetool/react-spline';
 
 const EducationSection = () => {
   const [selectedTab, setSelectedTab] = useState('education');
@@ -131,6 +132,22 @@ const EducationSection = () => {
               </div>
             </div>
           )}
+        </div>
+
+        {/* Education Section Spline 3D Asset */}
+        <div className="section-spline-container">
+          <div className="spline-wrapper-section">
+            <Spline 
+              scene="https://prod.spline.design/6VJO8UcjkXPIgVOQ/scene.splinecode"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+          <div className="spline-overlay-section">
+            <div className="overlay-text">
+              <h3>Academic Journey</h3>
+              <p>Building knowledge foundations</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
