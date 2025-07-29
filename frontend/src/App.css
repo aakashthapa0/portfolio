@@ -172,19 +172,27 @@ body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 40px 7.6923%;
+  padding: 0;
 }
 
 .landing-content {
-  max-width: 1400px;
   width: 100%;
   position: relative;
   z-index: 2;
 }
 
+/* Split Screen Layout */
+.split-screen-layout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+
 .hero-section {
-  text-align: center;
-  margin-bottom: 80px;
+  flex: 1;
+  padding: 60px 7.6923% 60px 7.6923%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   opacity: 0;
   transform: translateY(30px);
   transition: all 1s ease;
@@ -193,6 +201,10 @@ body {
 .hero-section.fade-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+.hero-text {
+  margin-bottom: 60px;
 }
 
 .hero-greeting {
@@ -238,8 +250,8 @@ body {
   font-size: 18px;
   line-height: 1.6;
   color: var(--text-secondary);
-  max-width: 800px;
-  margin: 0 auto 24px;
+  max-width: 500px;
+  margin-bottom: 24px;
 }
 
 .hero-location {
@@ -248,20 +260,60 @@ body {
   font-weight: 500;
 }
 
+/* Spline 3D Container */
+.spline-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.spline-wrapper {
+  width: 700px;
+  height: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+.spline-overlay {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 10;
+}
+
+.overlay-text h3 {
+  color: var(--brand-primary);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.overlay-text p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
 /* Floating Navigation Cards */
 .floating-nav-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 500px;
 }
 
 .floating-nav-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  padding: 32px 24px;
+  padding: 20px 16px;
   text-decoration: none;
   color: var(--text-primary);
   transition: all 0.4s ease;
@@ -280,21 +332,21 @@ body {
 }
 
 .floating-nav-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-4px);
   border-color: var(--brand-primary);
   box-shadow: var(--shadow-glow);
   background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--brand-hover) 100%);
 }
 
 .card-icon {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   background: var(--brand-hover);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   transition: all 0.3s ease;
 }
 
@@ -305,17 +357,17 @@ body {
 }
 
 .card-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--text-primary);
 }
 
 .card-description {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--text-muted);
-  margin-bottom: 16px;
-  line-height: 1.5;
+  margin-bottom: 12px;
+  line-height: 1.4;
 }
 
 .card-arrow {
