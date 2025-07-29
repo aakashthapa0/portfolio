@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { personalInfo } from "../data/mock";
 import { MapPin, Mail, Linkedin, Github } from "lucide-react";
-import Spline from '@splinetool/react-spline';
+// Remove Spline import for now to fix the error
 
 const AboutSection = () => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -89,22 +89,6 @@ const AboutSection = () => {
                 projects, and sharing knowledge with the developer community through mentoring and 
                 technical discussions.
               </p>
-            </div>
-          </div>
-        </div>
-
-        {/* About Section Spline 3D Asset */}
-        <div className="section-spline-container">
-          <div className="spline-wrapper-section">
-            <Spline 
-              scene="https://prod.spline.design/6Wq1Q4oMXkVKoVHy/scene.splinecode"
-              style={{ width: "100%", height: "100%" }}
-            />
-          </div>
-          <div className="spline-overlay-section">
-            <div className="overlay-text">
-              <h3>Professional Journey</h3>
-              <p>Explore my career path</p>
             </div>
           </div>
         </div>
