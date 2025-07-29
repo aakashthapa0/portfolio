@@ -2538,23 +2538,86 @@ body {
     font-size: 11px;
   }
   
-  .about-content {
+  /* About Section 3D Mobile */
+  .about-main-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-card-3d {
+    height: 400px;
+  }
+
+  .card-front,
+  .card-back {
+    padding: 24px;
+  }
+
+  .floating-cube,
+  .floating-wireframe {
+    display: none; /* Hide 3D background elements on mobile for performance */
+  }
+
+  .detail-card-3d:hover {
+    transform: translateY(-2px); /* Reduce 3D transforms on mobile */
+  }
+  
+  /* Experience Section 3D Mobile */
+  .experience-content-3d {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .timeline-container-3d {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 20px;
+  }
+
+  .timeline-line-3d {
+    display: none;
+  }
+
+  .timeline-node-3d {
+    margin-bottom: 0;
+    margin-right: 30px;
+    flex-shrink: 0;
+  }
+
+  .card-3d-effect:hover {
+    transform: none; /* Disable 3D hover effects on mobile */
+  }
+
+  .timeline-particle {
+    display: none; /* Hide floating particles on mobile */
+  }
+  
+  /* Projects Section 3D Mobile */
+  .projects-content-3d {
     grid-template-columns: 1fr;
     gap: 40px;
   }
   
-  .experience-content {
+  .gallery-grid-3d {
     grid-template-columns: 1fr;
-    gap: 40px;
   }
-  
-  .projects-content {
-    grid-template-columns: 1fr;
-    gap: 40px;
+
+  .project-thumbnail-3d:hover,
+  .project-thumbnail-3d.active {
+    transform: none; /* Disable 3D transforms on mobile */
   }
-  
-  .gallery-grid {
-    grid-template-columns: 1fr;
+
+  .project-card-inner:hover {
+    transform: none;
+  }
+
+  .floating-code-blocks {
+    display: none; /* Hide floating code blocks on mobile */
+  }
+
+  .projects-gallery-3d {
+    position: static; /* Remove sticky positioning on mobile */
   }
   
   .category-selector {
@@ -2596,16 +2659,43 @@ body {
     font-size: 28px;
   }
   
-  .about-card {
-    height: 400px;
+  .about-card-3d {
+    height: 350px;
   }
   
   .card-front,
   .card-back {
-    padding: 24px;
+    padding: 20px;
   }
 
   .spline-container {
     height: 250px;
+  }
+
+  /* Further reduce 3D effects on very small screens */
+  .card-3d-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .detail-card-3d {
+    padding: 20px;
+  }
+
+  .experience-card-3d,
+  .project-card-3d {
+    padding: 20px;
+  }
+
+  .card-3d-effect,
+  .project-card-inner {
+    padding: 20px;
+  }
+
+  /* Disable complex animations on very small screens */
+  .floating-3d-elements,
+  .timeline-3d-background,
+  .projects-3d-background {
+    display: none;
   }
 }
