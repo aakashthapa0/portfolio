@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Code, Briefcase, User, GraduationCap, Layers } from "lucide-react";
+import Spline from '@splinetool/react-spline';
 import { personalInfo } from "../data/mock";
 
 const LandingPage = () => {
@@ -33,48 +34,67 @@ const LandingPage = () => {
   return (
     <div className="landing-container">
       <div className="landing-content">
-        {/* Hero Section */}
-        <div className={`hero-section ${isVisible ? 'fade-in' : ''}`}>
-          <div className="hero-text">
-            <h1 className="hero-greeting">
-              Hi, I'm <span className="name-highlight">{personalInfo.name}</span>
-            </h1>
-            <div className="rotating-title">
-              <span className="rotating-text">
-                {rotatingTexts[currentText]}
-              </span>
+        {/* Split Screen Layout */}
+        <div className="split-screen-layout">
+          {/* Left Side - Hero Content */}
+          <div className={`hero-section ${isVisible ? 'fade-in' : ''}`}>
+            <div className="hero-text">
+              <h1 className="hero-greeting">
+                Hi, I'm <span className="name-highlight">{personalInfo.name}</span>
+              </h1>
+              <div className="rotating-title">
+                <span className="rotating-text">
+                  {rotatingTexts[currentText]}
+                </span>
+              </div>
+              <p className="hero-description">
+                {personalInfo.summary}
+              </p>
+              <div className="hero-location">
+                📍 {personalInfo.location}
+              </div>
             </div>
-            <p className="hero-description">
-              {personalInfo.summary}
-            </p>
-            <div className="hero-location">
-              📍 {personalInfo.location}
+
+            {/* Floating Navigation Cards */}
+            <div className="floating-nav-grid">
+              {quickNavItems.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`floating-nav-card card-${index + 1}`}
+                    style={{ animationDelay: `${index * 0.2}s` }}
+                  >
+                    <div className="card-icon">
+                      <IconComponent size={20} />
+                    </div>
+                    <h3 className="card-title">{item.name}</h3>
+                    <p className="card-description">{item.description}</p>
+                    <div className="card-arrow">
+                      <ArrowRight size={14} />
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
-        </div>
 
-        {/* Floating Navigation Cards */}
-        <div className="floating-nav-grid">
-          {quickNavItems.map((item, index) => {
-            const IconComponent = item.icon;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`floating-nav-card card-${index + 1}`}
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="card-icon">
-                  <IconComponent size={24} />
-                </div>
-                <h3 className="card-title">{item.name}</h3>
-                <p className="card-description">{item.description}</p>
-                <div className="card-arrow">
-                  <ArrowRight size={16} />
-                </div>
-              </Link>
-            );
-          })}
+          {/* Right Side - 3D Spline Scene */}
+          <div className="spline-container">
+            <div className="spline-wrapper">
+              <Spline 
+                scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </div>
+            <div className="spline-overlay">
+              <div className="overlay-text">
+                <h3>Interactive 3D Experience</h3>
+                <p>Explore the immersive world of technology</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Interactive Background Elements */}
