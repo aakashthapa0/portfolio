@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { skills } from "../data/mock";
+import Spline from '@splinetool/react-spline';
 
 const SkillsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState('languages');
@@ -102,6 +103,22 @@ const SkillsSection = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Skills Section Spline 3D Asset */}
+        <div className="section-spline-container">
+          <div className="spline-wrapper-section">
+            <Spline 
+              scene="https://prod.spline.design/4W0r5_uf3EjdVtN9/scene.splinecode"
+              style={{ width: "100%", height: "100%" }}
+            />
+          </div>
+          <div className="spline-overlay-section">
+            <div className="overlay-text">
+              <h3>Skill Mastery</h3>
+              <p>Technologies I excel in</p>
+            </div>
           </div>
         </div>
       </div>
