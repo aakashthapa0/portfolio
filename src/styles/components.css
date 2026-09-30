@@ -1330,18 +1330,19 @@
 .contact-email-box {
   display: inline-flex;
   align-items: center;
-  background: var(--text-primary);
-  color: var(--bg-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-md);
-  padding: 0.35rem 0.45rem 0.35rem 1.4rem;
-  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 260ms ease, background 260ms ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  padding: 0.35rem 0.5rem 0.35rem 1.4rem;
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 260ms ease, background 260ms ease, border-color 260ms ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 
 .contact-email-box:hover {
-  background: #FFFFFF;
+  background: var(--bg-surface-elevated);
+  border-color: var(--accent-blue);
   transform: translateY(-5px);
-  box-shadow: 0 14px 32px rgba(243, 241, 235, 0.28);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45), 0 0 20px var(--accent-glow-subtle);
 }
 
 .contact-email-link {
@@ -1350,36 +1351,52 @@
   gap: 0.65rem;
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--bg-primary);
+  color: var(--text-primary) !important;
   text-decoration: none;
-  padding: 0.45rem 0.4rem 0.45rem 0;
+  padding: 0.5rem 0.4rem 0.5rem 0;
   transition: color 200ms ease;
+}
+
+.contact-email-link svg {
+  color: var(--accent-blue);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.contact-email-link:hover {
+  color: var(--accent-blue) !important;
+}
+
+.contact-email-link:hover svg {
+  transform: translateX(2px) translateY(-1px);
 }
 
 .contact-email-divider {
   width: 1px;
   height: 20px;
-  background: rgba(17, 20, 25, 0.2);
-  margin: 0 0.45rem 0 0.65rem;
+  background: var(--border-subtle);
+  margin: 0 0.5rem 0 0.75rem;
 }
 
 .contact-email-copy-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: calc(var(--radius-md) - 4px);
-  background: rgba(17, 20, 25, 0.08);
-  border: none;
-  color: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: background 180ms ease, transform 150ms ease, color 180ms ease;
+  transition: background 180ms ease, transform 150ms ease, color 180ms ease, border-color 180ms ease;
   flex-shrink: 0;
 }
 
 .contact-email-copy-btn:hover {
-  background: rgba(17, 20, 25, 0.16);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
   transform: scale(1.08);
 }
 
