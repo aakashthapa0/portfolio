@@ -32,7 +32,7 @@ export default function ResumeModal({ isOpen, onClose }) {
         <div className="modal-header">
           <div className="modal-title-wrap">
             <h3 id="resume-modal-title" style={{ fontSize: '1.15rem', fontWeight: 700 }}>
-              {resumeData.name} — Curriculum Vitae
+              {resumeData.name}
             </h3>
             <span className="tech-tag" style={{ marginLeft: '0.5rem' }}>Official Resume</span>
           </div>
@@ -82,6 +82,10 @@ export default function ResumeModal({ isOpen, onClose }) {
               <span>•</span>
               <a href={resumeData.linkedin} target="_blank" rel="noreferrer" style={{ color: 'var(--text-accent)', textDecoration: 'underline' }}>
                 LinkedIn
+              </a>
+              <span>•</span>
+              <a href={resumeData.github} target="_blank" rel="noreferrer" style={{ color: 'var(--text-accent)', textDecoration: 'underline' }}>
+                GitHub
               </a>
             </div>
           </div>
@@ -168,11 +172,11 @@ export default function ResumeModal({ isOpen, onClose }) {
             <h3 style={{ fontSize: '1rem', color: 'var(--text-accent)', marginBottom: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
               Technologies
             </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.885rem' }}>
+            <div className="resume-tech-grid">
               {resumeData.technologies.map((tech, idx) => (
-                <div key={idx} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
-                  <strong style={{ color: 'var(--text-primary)', minWidth: '170px' }}>{tech.category}:</strong>
-                  <span style={{ color: 'var(--text-secondary)' }}>{tech.list}</span>
+                <div key={idx} className="resume-tech-row">
+                  <strong className="resume-tech-label">{tech.category}:</strong>
+                  <span className="resume-tech-list">{tech.list}</span>
                 </div>
               ))}
             </div>

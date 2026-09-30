@@ -9,6 +9,7 @@ export const resumeData = {
   email: "aakashthapa.work@gmail.com",
   phone: "+1 (806) 283-3741",
   linkedin: "https://www.linkedin.com/in/aakash-thapa-01/",
+  github: "https://github.com/younameit01",
   directPdfUrl: `${import.meta.env.BASE_URL}Aakash_Thapa_Resume.pdf`,
   summary: "M.S. in Computer Science candidate and Senior Full-Stack Software Engineer with 6+ years of experience building scalable web, mobile, and AI-powered applications using Python, React, Django, and AWS. Experienced in LLM-powered document platforms and AI-assisted development using Cursor for implementation, refactoring, testing, and debugging.",
   education: [
