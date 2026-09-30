@@ -229,7 +229,7 @@ export default function MacPulseCaseStudy({ onBackToHome }) {
                   <Zap size={15} />
                   <span>Performance Optimization</span>
                 </div>
-                <span style={{ fontSize: '0.7rem', padding: '0.2rem 0.55rem', background: 'rgba(127, 181, 255, 0.12)', color: '#7FB5FF', borderRadius: '12px', border: '1px solid rgba(127, 181, 255, 0.25)' }}>
+                <span style={{ fontSize: '0.7rem', padding: '0.2rem 0.55rem', background: 'var(--accent-glow-subtle)', color: 'var(--text-accent)', borderRadius: '12px', border: '1px solid var(--border-medium)' }}>
                   In Progress
                 </span>
               </div>

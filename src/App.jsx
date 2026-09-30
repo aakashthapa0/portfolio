@@ -8,6 +8,8 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MagicPointerGlow from './components/MagicPointerGlow';
+import { applyTheme, getStoredTheme } from './utils/themeEngine';
+import { initSmoothScroll, stopScroll, startScroll, scrollTo } from './utils/smoothScroll';
 
 const ResumeModal = lazy(() => import('./components/ResumeModal'));
 const MacPulseCaseStudy = lazy(() => import('./components/MacPulseCaseStudy'));
@@ -34,10 +36,30 @@ export default function App() {
     return false;
   });
 
+  // Initialize Lenis 60 FPS Smooth Scroll on mount and keep in sync
+  useEffect(() => {
+    initSmoothScroll(isMotionPaused);
+  }, [isMotionPaused]);
+
+  // Lock background scroll when Resume modal is active
+  useEffect(() => {
+    if (isResumeOpen) {
+      stopScroll();
+    } else {
+      startScroll();
+    }
+  }, [isResumeOpen]);
+
+  // Apply stored theme on initial app mount
+  useEffect(() => {
+    applyTheme(getStoredTheme(), false);
+  }, []);
+
   // Listen to popstate (browser back/forward)
   useEffect(() => {
     const handlePopState = () => {
       setCurrentPath(getInitialPath());
+      scrollTo(0, { immediate: true });
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -59,7 +81,7 @@ export default function App() {
     if (window.history.pushState) {
       window.history.pushState({}, '', path);
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollTo(0, { immediate: true });
   };
 
   return (

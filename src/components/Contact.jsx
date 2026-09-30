@@ -30,24 +30,26 @@ export default function Contact({ onOpenResume }) {
           </p>
 
           <div className="contact-actions-grid">
-            <a 
-              href={`mailto:${personalInfo.contacts.email}`} 
-              className="contact-btn contact-email-btn"
-              aria-label="Send direct email to Aakash Thapa"
-            >
-              <Send size={18} />
-              <span>{personalInfo.contacts.email}</span>
-            </a>
-
-            <button
-              type="button"
-              className="contact-btn contact-social-btn"
-              onClick={handleCopyEmail}
-              aria-label="Copy email address to clipboard"
-            >
-              {copied ? <Check size={18} color="#10B981" /> : <Copy size={18} />}
-              <span>{copied ? "Email Copied!" : "Copy Email"}</span>
-            </button>
+            <div className="contact-email-box">
+              <a 
+                href={`mailto:${personalInfo.contacts.email}`} 
+                className="contact-email-link"
+                aria-label="Send direct email to Aakash Thapa"
+              >
+                <Send size={17} />
+                <span>{personalInfo.contacts.email}</span>
+              </a>
+              <span className="contact-email-divider" aria-hidden="true" />
+              <button
+                type="button"
+                className="contact-email-copy-btn"
+                onClick={handleCopyEmail}
+                title={copied ? "Email copied to clipboard!" : "Copy email address"}
+                aria-label={copied ? "Email copied" : "Copy email address to clipboard"}
+              >
+                {copied ? <Check size={16} color="#059669" /> : <Copy size={16} />}
+              </button>
+            </div>
 
             <a 
               href={personalInfo.contacts.linkedin} 

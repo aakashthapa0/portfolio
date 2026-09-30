@@ -6,12 +6,15 @@
   --bg-surface-elevated: #222B36;
   --bg-surface-glass: rgba(27, 33, 41, 0.72);
   --bg-card-hover: rgba(34, 43, 54, 0.88);
+  --bg-header: rgba(17, 20, 25, 0.82);
+  --bg-header-scrolled: rgba(17, 20, 25, 0.94);
 
   /* Typography Colors */
   --text-primary: #F3F1EB;
   --text-secondary: #B7C0CB;
   --text-muted: #718096;
   --text-accent: #7FB5FF;
+  --text-gradient: linear-gradient(135deg, #FFFFFF 20%, #7FB5FF 70%, #60A5FA 100%);
 
   /* Accent & Illumination */
   --accent-blue: #7FB5FF;
@@ -19,6 +22,12 @@
   --accent-glow: rgba(127, 181, 255, 0.25);
   --accent-glow-subtle: rgba(127, 181, 255, 0.08);
   --accent-glow-strong: rgba(59, 130, 246, 0.5);
+
+  /* Dynamic Themed Buttons */
+  --btn-primary-bg: linear-gradient(135deg, #A8D1FF 0%, #7FB5FF 50%, #60A5FA 100%);
+  --btn-primary-text: #0b0f15;
+  --btn-primary-shadow: 0 2px 14px rgba(127, 181, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --btn-primary-shadow-hover: 0 6px 22px rgba(127, 181, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 
   /* Semantic Observability Colors */
   --status-normal: #10B981;

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Menu, X, FileText } from 'lucide-react';
+import ThemeSelector from './ThemeSelector';
+import { scrollTo, stopScroll, startScroll } from '../utils/smoothScroll';
 
 export default function Header({ 
   currentPath, 
@@ -12,6 +14,15 @@ export default function Header({
   const navLinksRef = useRef(null);
   const itemRefs = useRef({});
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
+
+  // Lock body scroll when mobile navigation drawer is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      stopScroll();
+    } else {
+      startScroll();
+    }
+  }, [isMobileMenuOpen]);
 
   const updateIndicator = useCallback(() => {
     if (currentPath !== '/') {
@@ -33,49 +44,64 @@ export default function Header({
     }
   }, [activeSection, currentPath]);
 
+  // High-performance RAF-throttled scroll tracking
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    let ticking = false;
 
-      if (currentPath !== '/') return;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          setIsScrolled(scrollY > 20);
 
-      const sections = ['contact', 'about', 'capabilities', 'experience', 'macpulse'];
-      const scrollY = window.scrollY;
-      const viewportHeight = window.innerHeight;
-      const docHeight = document.documentElement.scrollHeight;
-
-      // Bottom of page detection (Contact active)
-      if (scrollY + viewportHeight >= docHeight - 80) {
-        setActiveSection('contact');
-        return;
-      }
-
-      // Check if user is still above the first section (hero)
-      const macpulseEl = document.getElementById('macpulse');
-      if (macpulseEl) {
-        const macpulseTop = macpulseEl.offsetTop - 200;
-        if (scrollY < macpulseTop) {
-          setActiveSection('');
-          return;
-        }
-      }
-
-      // Test sections from bottom to top
-      for (const id of sections) {
-        const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop - 200;
-          if (scrollY >= top) {
-            setActiveSection(id);
+          if (currentPath !== '/') {
+            ticking = false;
             return;
           }
-        }
+
+          const sections = ['contact', 'about', 'capabilities', 'experience', 'macpulse'];
+          const viewportHeight = window.innerHeight;
+          const docHeight = document.documentElement.scrollHeight;
+
+          // Bottom of page detection (Contact active)
+          if (scrollY + viewportHeight >= docHeight - 80) {
+            setActiveSection('contact');
+            ticking = false;
+            return;
+          }
+
+          // Check if user is still above the first section (hero)
+          const macpulseEl = document.getElementById('macpulse');
+          if (macpulseEl) {
+            const macpulseTop = macpulseEl.offsetTop - 200;
+            if (scrollY < macpulseTop) {
+              setActiveSection('');
+              ticking = false;
+              return;
+            }
+          }
+
+          // Test sections from bottom to top
+          for (const id of sections) {
+            const el = document.getElementById(id);
+            if (el) {
+              const top = el.offsetTop - 200;
+              if (scrollY >= top) {
+                setActiveSection(id);
+                ticking = false;
+                return;
+              }
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
   }, [currentPath]);
 
   // Update sliding indicator position on active section or path change
@@ -100,37 +126,19 @@ export default function Header({
       setActiveSection(cleanId);
       onNavigate('/');
       setTimeout(() => {
-        const elem = document.querySelector(target);
-        if (elem) {
-          const headerOffset = 76;
-          const elementPosition = elem.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 100);
+        scrollTo(target, { offset: -76, duration: 1.2 });
+      }, 120);
       return;
     }
 
     if (target.startsWith('#')) {
       const cleanId = target.replace('#', '');
       setActiveSection(cleanId);
-      const elem = document.querySelector(target);
-      if (elem) {
-        const headerOffset = 76;
-        const elementPosition = elem.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
+      scrollTo(target, { offset: -76, duration: 1.2 });
     } else {
       setActiveSection('');
       onNavigate(target);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      scrollTo(0, { immediate: true });
     }
   };
 
@@ -171,7 +179,7 @@ export default function Header({
                 className={`nav-link ${activeSection === 'macpulse' ? 'active' : ''}`} 
                 onClick={(e) => handleNavClick(e, '#macpulse')}
               >
-                Work
+                Projects
               </a>
             </li>
             <li>
@@ -219,6 +227,9 @@ export default function Header({
 
         {/* Header Actions */}
         <div className="header-actions">
+          {/* Theme Palette Customizer */}
+          <ThemeSelector />
+
           {/* Resume Button */}
           <button 
             type="button" 
@@ -254,7 +265,7 @@ export default function Header({
           className={`nav-link ${activeSection === 'macpulse' ? 'active' : ''}`}
           onClick={(e) => handleNavClick(e, '#macpulse')}
         >
-          Work (MacPulse)
+          Projects (MacPulse)
         </a>
         <a 
           href="#experience" 
@@ -293,6 +304,9 @@ export default function Header({
             <FileText size={16} />
             <span>View Resume</span>
           </button>
+
+          {/* Mobile Theme Palette Selector */}
+          <ThemeSelector isMobile />
         </div>
       </div>
     </header>

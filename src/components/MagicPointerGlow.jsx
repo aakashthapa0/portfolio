@@ -18,6 +18,7 @@ export default function MagicPointerGlow({ isMotionPaused }) {
   const animFrameId = useRef(null);
 
   const activeCardRef = useRef(null);
+  const sparkleColorsRef = useRef(['#FFFFFF', '#7FB5FF', '#A8D1FF', '#60A5FA']);
 
   // Check if device supports fine hover pointer (mouse/trackpad, not touch)
   const [isFinePointer, setIsFinePointer] = useState(() => {
@@ -79,6 +80,9 @@ export default function MagicPointerGlow({ isMotionPaused }) {
       const target = e.target;
       if (!target) return;
 
+      // Skip expensive card collision & tilt calculation during active scroll motion
+      if (isScrollingRef.current) return;
+
       // Check if hovering interactive element for pointer light expansion
       const interactive = Boolean(
         target.closest('a, button, input, textarea, select, [role="button"], .device-node-card, .timeline-item, .capability-card, .education-card, .principle-item, .contact-btn, .metric-card, .arch-pill, .glass-panel, .arch-flow-node, .case-study-meta-item, .roadmap-card, .ai-diagnostics-card, .case-study-highlight-card')
@@ -139,11 +143,19 @@ export default function MagicPointerGlow({ isMotionPaused }) {
       }
     };
 
+    let scrollTimeout = null;
+    const isScrollingRef = { current: false };
+
     const handleScrollOrBlur = () => {
+      isScrollingRef.current = true;
       if (activeCardRef.current) {
         resetCard(activeCardRef.current);
         activeCardRef.current = null;
       }
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 100);
     };
 
     const handlePointerEnter = () => {
@@ -165,7 +177,7 @@ export default function MagicPointerGlow({ isMotionPaused }) {
             size: 2 + Math.random() * 2,
             alpha: 0.95,
             decay: 0.032,
-            color: ['#FFFFFF', '#7FB5FF', '#A8D1FF', '#60A5FA'][Math.floor(Math.random() * 4)],
+            color: sparkleColorsRef.current[Math.floor(Math.random() * sparkleColorsRef.current.length)],
           });
         }
       }
@@ -175,6 +187,13 @@ export default function MagicPointerGlow({ isMotionPaused }) {
       setIsClicking(false);
     };
 
+    const handleThemeChange = (e) => {
+      if (e.detail?.sparkleColors) {
+        sparkleColorsRef.current = e.detail.sparkleColors;
+      }
+    };
+
+    window.addEventListener('portfolio-theme-change', handleThemeChange);
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerleave', handlePointerLeave);
     window.addEventListener('pointerenter', handlePointerEnter);
@@ -184,10 +203,12 @@ export default function MagicPointerGlow({ isMotionPaused }) {
     window.addEventListener('blur', handleScrollOrBlur);
 
     return () => {
+      clearTimeout(scrollTimeout);
       if (activeCardRef.current) {
         resetCard(activeCardRef.current);
         activeCardRef.current = null;
       }
+      window.removeEventListener('portfolio-theme-change', handleThemeChange);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('pointerenter', handlePointerEnter);
@@ -271,7 +292,7 @@ export default function MagicPointerGlow({ isMotionPaused }) {
               size: 1.5 + Math.random() * 2,
               alpha: 0.85,
               decay: 0.025 + Math.random() * 0.02,
-              color: ['#FFFFFF', '#7FB5FF', '#A8D1FF', '#93C5FD'][Math.floor(Math.random() * 4)],
+              color: sparkleColorsRef.current[Math.floor(Math.random() * sparkleColorsRef.current.length)],
             });
           }
         }

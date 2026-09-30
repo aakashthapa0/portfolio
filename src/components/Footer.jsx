@@ -1,10 +1,11 @@
 import React from 'react';
 import { ArrowUp } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
+import { scrollTo } from '../utils/smoothScroll';
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollTo(0, { duration: 1.2 });
   };
 
   return (
@@ -20,11 +21,6 @@ export default function Footer() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-          <span className="footer-meta-pill">
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
-            Built with React 19 & Three.js
-          </span>
-
           <button 
             type="button" 
             onClick={scrollToTop} 

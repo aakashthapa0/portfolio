@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Zap } from 'lucide-react';
+import { derivePalette, getStoredTheme } from '../utils/themeEngine';
 
 /**
  * RibbonScene: MacPulse Live Telemetry Core & Daemon Architecture
@@ -92,19 +93,21 @@ export default function RibbonScene({ isMotionPaused }) {
     }
 
     // Studio Illumination
+    const initialPalette = derivePalette(getStoredTheme());
+
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0x7FB5FF, 2.5);
+    const keyLight = new THREE.DirectionalLight(initialPalette.threePrimary, 2.5);
     keyLight.position.set(5, 5, 6);
     scene.add(keyLight);
 
-    const blueRimLight = new THREE.DirectionalLight(0x3B82F6, 2.0);
+    const blueRimLight = new THREE.DirectionalLight(initialPalette.threeSecondary, 2.0);
     blueRimLight.position.set(-6, -4, -3);
     scene.add(blueRimLight);
 
     // Central Coordinator Pulse Light
-    const corePulseLight = new THREE.PointLight(0x7FB5FF, 1.2, 12);
+    const corePulseLight = new THREE.PointLight(initialPalette.threePrimary, 1.2, 12);
     corePulseLight.position.set(0, 0, 0);
     scene.add(corePulseLight);
 
@@ -118,8 +121,8 @@ export default function RibbonScene({ isMotionPaused }) {
     // Glowing Inner Emissive Nucleus
     const innerGeo = new THREE.IcosahedronGeometry(0.68, 2);
     const innerMat = new THREE.MeshStandardMaterial({
-      color: 0x7FB5FF,
-      emissive: 0x3B82F6,
+      color: initialPalette.threePrimary,
+      emissive: initialPalette.threeSecondary,
       emissiveIntensity: 1.1,
       roughness: 0.1,
       metalness: 0.8,
@@ -143,8 +146,8 @@ export default function RibbonScene({ isMotionPaused }) {
     // Surrounding Orbital Event Ring
     const ringGeo = new THREE.TorusGeometry(1.5, 0.022, 16, 100);
     const ringMat = new THREE.MeshStandardMaterial({
-      color: 0x7FB5FF,
-      emissive: 0x3B82F6,
+      color: initialPalette.threePrimary,
+      emissive: initialPalette.threeSecondary,
       emissiveIntensity: 0.6,
       transparent: true,
       opacity: 0.75,
@@ -198,7 +201,7 @@ export default function RibbonScene({ isMotionPaused }) {
       const tubeGeo = new THREE.TubeGeometry(curve, 40, 0.024, 8, false);
       const tubeMat = new THREE.MeshStandardMaterial({
         color: 0x2A384A,
-        emissive: 0x3B82F6,
+        emissive: initialPalette.threeSecondary,
         emissiveIntensity: 0.45,
         transparent: true,
         opacity: 0.65,
@@ -221,6 +224,29 @@ export default function RibbonScene({ isMotionPaused }) {
     ctx.pipelines = pipelines;
     ctx.packets = packets;
 
+    // Real-time theme change listener for Three.js lights and materials
+    const handleThemeChange = (e) => {
+      const p = e.detail;
+      if (!p) return;
+      if (keyLight) keyLight.color.setHex(p.threePrimary);
+      if (blueRimLight) blueRimLight.color.setHex(p.threeSecondary);
+      if (corePulseLight) corePulseLight.color.setHex(p.threePrimary);
+      if (innerMat) {
+        innerMat.color.setHex(p.threePrimary);
+        innerMat.emissive.setHex(p.threeSecondary);
+      }
+      if (ringMat) {
+        ringMat.color.setHex(p.threePrimary);
+        ringMat.emissive.setHex(p.threeSecondary);
+      }
+      pipelines.forEach((pipe) => {
+        if (pipe.material) {
+          pipe.material.emissive.setHex(p.threeSecondary);
+        }
+      });
+    };
+    window.addEventListener('portfolio-theme-change', handleThemeChange);
+
     // Mouse Tracking
     const handleMouseMove = (e) => {
       const rect = container.getBoundingClientRect();
@@ -235,8 +261,25 @@ export default function RibbonScene({ isMotionPaused }) {
       ctx.targetRotation.x = 0;
     };
 
+    // IntersectionObserver to pause WebGL render loop when hero is off-screen (saving 100% GPU/CPU)
+    let isVisible = true;
+    let observer = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      observer = new IntersectionObserver(([entry]) => {
+        const wasVisible = isVisible;
+        isVisible = entry.isIntersecting;
+        if (!wasVisible && isVisible) {
+          if (!ctx.frameId) {
+            ctx.frameId = requestAnimationFrame(animate);
+          }
+        }
+      }, { threshold: 0.05 });
+      observer.observe(container);
+    }
+
     // Scroll mapping
     const handleScroll = () => {
+      if (!isVisible) return;
       const scrollY = window.scrollY;
       const maxScroll = window.innerHeight * 1.5;
       ctx.scrollProgress = Math.min(scrollY / maxScroll, 1.0);
@@ -259,6 +302,11 @@ export default function RibbonScene({ isMotionPaused }) {
     // Animation Loop
     let clock = 0;
     const animate = () => {
+      if (!isVisible) {
+        ctx.frameId = null;
+        return; // Halt render loop when off-screen
+      }
+
       ctx.frameId = requestAnimationFrame(animate);
 
       if (isMotionPaused) {
@@ -323,8 +371,10 @@ export default function RibbonScene({ isMotionPaused }) {
 
     return () => {
       if (ctx.frameId) cancelAnimationFrame(ctx.frameId);
+      if (observer) observer.disconnect();
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('portfolio-theme-change', handleThemeChange);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
 
@@ -337,6 +387,10 @@ export default function RibbonScene({ isMotionPaused }) {
       ringMat.dispose();
       nodeBoxGeo.dispose();
       nodeMat.dispose();
+      pipelines.forEach((pipe) => {
+        if (pipe.tube && pipe.tube.geometry) pipe.tube.geometry.dispose();
+        if (pipe.material) pipe.material.dispose();
+      });
       if (renderer) renderer.dispose();
     };
   }, [isMotionPaused, webGLFailed]);
@@ -349,18 +403,18 @@ export default function RibbonScene({ isMotionPaused }) {
           <div className="ribbon-fallback-poster" role="img" aria-label="MacPulse System Architecture Diagram">
             <svg className="fallback-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
               {/* Coordinator Core */}
-              <circle cx="120" cy="120" r="32" fill="#1B2129" stroke="#7FB5FF" strokeWidth="3" />
-              <circle cx="120" cy="120" r="14" fill="#3B82F6" />
+              <circle cx="120" cy="120" r="32" fill="var(--bg-surface)" stroke="var(--accent-blue)" strokeWidth="3" />
+              <circle cx="120" cy="120" r="14" fill="var(--accent-electric)" />
               
               {/* Pipeline Links */}
-              <path d="M50 60 Q80 100 120 120" stroke="#7FB5FF" strokeWidth="2" strokeDasharray="4 4" />
-              <path d="M190 70 Q160 100 120 120" stroke="#7FB5FF" strokeWidth="2" strokeDasharray="4 4" />
-              <path d="M120 200 L120 120" stroke="#7FB5FF" strokeWidth="2" strokeDasharray="4 4" />
+              <path d="M50 60 Q80 100 120 120" stroke="var(--accent-blue)" strokeWidth="2" strokeDasharray="4 4" />
+              <path d="M190 70 Q160 100 120 120" stroke="var(--accent-blue)" strokeWidth="2" strokeDasharray="4 4" />
+              <path d="M120 200 L120 120" stroke="var(--accent-blue)" strokeWidth="2" strokeDasharray="4 4" />
 
               {/* Edge Daemon Nodes */}
-              <rect x="25" y="45" width="48" height="30" rx="4" fill="#222B36" stroke="#10B981" strokeWidth="2" />
-              <rect x="165" y="55" width="50" height="30" rx="4" fill="#222B36" stroke="#7FB5FF" strokeWidth="2" />
-              <rect x="95" y="185" width="50" height="30" rx="4" fill="#222B36" stroke="#60A5FA" strokeWidth="2" />
+              <rect x="25" y="45" width="48" height="30" rx="4" fill="var(--bg-surface-elevated)" stroke="#10B981" strokeWidth="2" />
+              <rect x="165" y="55" width="50" height="30" rx="4" fill="var(--bg-surface-elevated)" stroke="var(--accent-blue)" strokeWidth="2" />
+              <rect x="95" y="185" width="50" height="30" rx="4" fill="var(--bg-surface-elevated)" stroke="var(--accent-electric)" strokeWidth="2" />
             </svg>
             <p className="fallback-caption">
               MacPulse Telemetry • Central Coordinator & Edge Daemon Pipelines

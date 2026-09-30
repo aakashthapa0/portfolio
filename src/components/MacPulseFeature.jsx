@@ -281,14 +281,14 @@ export default function MacPulseFeature({ onNavigateToCaseStudy }) {
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '1rem' }}>
-                <div style={{ background: 'rgba(17, 20, 25, 0.4)', padding: '0.75rem', borderRadius: '6px' }}>
-                  <div style={{ fontSize: '0.75rem', color: '#718096' }}>Free Headroom</div>
+                <div style={{ background: 'var(--bg-surface-glass)', border: '1px solid var(--border-subtle)', padding: '0.75rem', borderRadius: '6px' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Free Headroom</div>
                   <div style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', fontWeight: 600 }}>
                     {(currentTotalGB - currentUsedGB).toFixed(1)} GB
                   </div>
                 </div>
-                <div style={{ background: 'rgba(17, 20, 25, 0.4)', padding: '0.75rem', borderRadius: '6px' }}>
-                  <div style={{ fontSize: '0.75rem', color: '#718096' }}>Write Ingestion Rate</div>
+                <div style={{ background: 'var(--bg-surface-glass)', border: '1px solid var(--border-subtle)', padding: '0.75rem', borderRadius: '6px' }}>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Write Ingestion Rate</div>
                   <div style={{ 
                     fontFamily: 'var(--font-mono)', 
                     fontSize: '1.1rem', 

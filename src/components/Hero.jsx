@@ -41,11 +41,11 @@ export default function Hero({ onOpenResume, isMotionPaused }) {
             </div>
             <div className="meta-item">
               <span className="meta-label">Education</span>
-              <span className="meta-val">Texas Tech (MS CS '27)</span>
+              <span className="meta-val">Texas Tech University (MSCS '27)</span>
             </div>
             <div className="meta-item">
-              <span className="meta-label">Focus Areas</span>
-              <span className="meta-val">Distributed Systems & AI</span>
+              <span className="meta-label">Focus Area</span>
+              <span className="meta-val">Software and AI Engineering</span>
             </div>
           </div>
 
