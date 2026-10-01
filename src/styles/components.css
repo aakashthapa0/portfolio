@@ -169,12 +169,32 @@
   border-color: rgba(245, 158, 11, 0.3);
 }
 
+.header-resume-btn {
+  display: inline-flex;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.85rem;
+}
+
 .menu-toggle-btn {
   display: none;
   background: transparent;
   color: var(--text-primary);
   padding: 0.5rem;
   border-radius: var(--radius-sm);
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile Nav Backdrop */
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 13, 17, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 98;
 }
 
 /* Mobile Nav Drawer */
@@ -187,20 +207,49 @@
   bottom: 0;
   background: var(--bg-primary);
   backdrop-filter: blur(20px);
-  padding: 2rem 1.5rem;
+  -webkit-backdrop-filter: blur(20px);
+  padding: 1.5rem 1.25rem calc(2rem + env(safe-area-inset-bottom, 0px));
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   z-index: 99;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: calc(100vh - var(--header-height));
+  max-height: calc(100dvh - var(--header-height));
+  border-bottom: 1px solid var(--border-medium);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65);
 }
 
 .mobile-nav-drawer.open {
   display: flex;
+  animation: mobileNavDrawerIn 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes mobileNavDrawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobile-nav-drawer .nav-link {
-  font-size: 1.25rem;
-  padding: 0.75rem 0;
+  font-size: 1.15rem;
+  padding: 0.75rem 0.5rem;
   border-bottom: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-nav-drawer .nav-link.active {
+  color: var(--accent-blue);
+  background: var(--accent-glow-subtle);
+  border-bottom-color: var(--accent-blue);
 }
 
 /* ==========================================================================
@@ -397,6 +446,19 @@
   background: var(--accent-glow);
   box-shadow: 0 0 12px var(--accent-glow);
   color: #fff;
+}
+
+.pulse-btn-text-short {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .pulse-btn-text-full {
+    display: none;
+  }
+  .pulse-btn-text-short {
+    display: inline;
+  }
 }
 
 /* Fallback Poster */
@@ -1721,29 +1783,84 @@
   box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.65), 0 0 28px var(--accent-glow-subtle);
 }
 
-/* Responsive Overrides */
+/* Case Study Cards Grid Base */
+.case-study-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Resume Modal Contact & Item Header Classes */
+.resume-contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.resume-dot {
+  color: var(--text-muted);
+}
+
+.resume-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+/* Contact Email Text Ellipsis Base */
+.contact-email-text {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   Comprehensive Responsive System (1024px, 768px, 640px, 480px, 360px)
+   ========================================================================== */
+
+/* Tablet Landscape & Medium Desktops (<= 1024px) */
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2.25rem;
   }
   
   .hero-scene-container {
-    height: 400px;
+    height: 380px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
   }
 }
 
+/* Tablet Portrait & Large Handhelds (<= 768px) */
 @media (max-width: 768px) {
+  .site-header {
+    height: 64px;
+  }
+
   .nav-links {
     display: none;
   }
   
   .menu-toggle-btn {
-    display: block;
+    display: flex;
   }
   
   .hero-scene-container {
-    height: 320px;
+    height: 300px;
+  }
+
+  .hero-meta-strip {
+    gap: 1rem;
   }
 
   .macpulse-hero-card {
@@ -1752,6 +1869,360 @@
 
   .fleet-demo-container {
     padding: 1.25rem;
+  }
+
+  /* Transform horizontal architecture flow into vertical pipeline on mobile */
+  .arch-flow-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .arch-flow-node {
+    width: 100%;
+    min-width: 0;
+    padding: 1.15rem 1rem;
+  }
+
+  .arch-flow-arrow {
+    transform: rotate(90deg);
+    margin: 0.25rem auto;
+    font-size: 1.1rem;
+  }
+
+  .interactive-arch-diagram {
+    padding: 1.5rem 1.15rem;
+  }
+
+  .case-study-meta-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .timeline-item {
+    padding: 1.5rem;
+  }
+
+  .capability-card {
+    padding: 1.5rem;
+  }
+
+  .education-card {
+    padding: 1.5rem;
+  }
+
+  .contact-card {
+    padding: 2.25rem 1.75rem;
+  }
+}
+
+/* Mobile Devices & Phablets (<= 640px) */
+@media (max-width: 640px) {
+  .header-resume-btn {
+    display: none;
+  }
+
+  .header-actions {
+    gap: 0.5rem;
+  }
+
+  .hero-section {
+    padding-top: calc(var(--header-height) + 1rem);
+    padding-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.65rem);
+  }
+
+  .hero-actions {
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-meta-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .hero-meta-strip .meta-item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .macpulse-header-row {
+    gap: 1rem;
+  }
+
+  .macpulse-actions {
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .macpulse-actions .btn-primary,
+  .macpulse-actions .btn-secondary {
+    flex: 1 1 100%;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* 2x2 Metric Grid on Mobile */
+  .macpulse-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding-top: 1.25rem;
+  }
+
+  .metric-card {
+    padding: 0.95rem 0.85rem;
+  }
+
+  .metric-val {
+    font-size: 1.35rem;
+  }
+
+  .metric-lbl {
+    font-size: 0.8rem;
+  }
+
+  /* Fix device tabs overflow: 1-col on mobile */
+  .device-tabs-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .demo-controls-group {
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .demo-controls-group .btn-simulate,
+  .demo-controls-group .btn-reset {
+    flex: 1 1 calc(50% - 0.25rem);
+    justify-content: center;
+    font-size: 0.825rem;
+    padding: 0.55rem 0.75rem;
+  }
+
+  /* Fix capabilities grid overflow: 1-col on mobile */
+  .capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Fix case study cards grid overflow */
+  .case-study-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .case-study-meta-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  /* Contact section mobile layout */
+  .contact-email-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.35rem 0.45rem 0.35rem 0.85rem;
+    justify-content: space-between;
+  }
+
+  .contact-email-link {
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .contact-email-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    min-width: 0;
+  }
+
+  .contact-actions-grid {
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .contact-actions-grid .contact-btn {
+    flex: 1 1 calc(50% - 0.5rem);
+    justify-content: center;
+    padding: 0.75rem 1rem;
+  }
+
+  /* Footer mobile */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  /* Resume Modal Mobile Sizing */
+  .modal-backdrop {
+    padding: 0.5rem;
+  }
+
+  .modal-container {
+    max-height: 94vh;
+    max-height: 94dvh;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .modal-body {
+    padding: 1.25rem 0.95rem;
+  }
+
+  .resume-contact-links {
+    gap: 0.4rem 0.65rem;
+    font-size: 0.825rem;
+  }
+
+  .resume-dot {
+    display: none;
+  }
+
+  .resume-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+  }
+
+  .experience-section,
+  .capabilities-section,
+  .about-section,
+  .contact-section {
+    padding: 3.5rem 0;
+  }
+}
+
+/* Small SmartPhones (<= 480px) */
+@media (max-width: 480px) {
+  .brand-mark {
+    font-size: 1.05rem;
+    gap: 0.55rem;
+  }
+
+  .brand-logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-monogram {
+    font-size: 0.85rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+    line-height: 1.15;
+  }
+
+  .hero-scene-container {
+    height: 260px;
+  }
+
+  .scene-overlay-controls {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.725rem;
+  }
+
+  .scene-signal-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.725rem;
+  }
+
+  .macpulse-title-group h3 {
+    font-size: 1.5rem;
+  }
+
+  .macpulse-tagline {
+    font-size: 0.95rem;
+  }
+
+  .macpulse-hero-card {
+    padding: 1.15rem 0.95rem;
+  }
+
+  .fleet-demo-container {
+    padding: 1rem 0.85rem;
+  }
+
+  .demo-controls-group .btn-simulate,
+  .demo-controls-group .btn-reset {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .telemetry-card {
+    padding: 1.15rem 0.95rem;
+  }
+
+  .ai-diagnosis-box {
+    padding: 1rem 0.85rem;
+  }
+
+  .ai-recommendations-list code {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    font-size: 0.785rem;
+  }
+
+  .timeline-item {
+    padding: 1.25rem 0.95rem;
+  }
+
+  .capability-card {
+    padding: 1.25rem 0.95rem;
+  }
+
+  .education-card {
+    padding: 1.25rem 0.95rem;
+  }
+
+  .contact-card {
+    padding: 2rem 1rem;
+  }
+
+  .contact-headline {
+    font-size: clamp(1.65rem, 6vw, 2.15rem);
+  }
+
+  .contact-actions-grid .contact-btn {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .case-study-title {
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+  }
+
+  .interactive-arch-diagram {
+    padding: 1.15rem 0.85rem;
+  }
+
+  .case-study-page {
+    padding-top: calc(var(--header-height) + 1rem);
+    padding-bottom: 3rem;
   }
 }
 

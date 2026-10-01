@@ -36,8 +36,8 @@ export default function Contact({ onOpenResume }) {
                 className="contact-email-link"
                 aria-label="Send direct email to Aakash Thapa"
               >
-                <Send size={17} />
-                <span>{personalInfo.contacts.email}</span>
+                <Send size={17} className="contact-send-icon" />
+                <span className="contact-email-text">{personalInfo.contacts.email}</span>
               </a>
               <span className="contact-email-divider" aria-hidden="true" />
               <button

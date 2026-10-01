@@ -64,6 +64,12 @@
   --header-height: 72px;
 }
 
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

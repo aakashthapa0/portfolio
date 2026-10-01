@@ -426,6 +426,7 @@ export default function RibbonScene({ isMotionPaused }) {
             className="ribbon-canvas"
             tabIndex={-1}
             aria-hidden="true"
+            style={{ touchAction: 'pan-y' }}
           />
         )}
 
@@ -439,11 +440,12 @@ export default function RibbonScene({ isMotionPaused }) {
             aria-label="Send Telemetry Pulse"
           >
             <Zap size={14} className={pulseActive ? "animate-pulse" : ""} />
-            <span>Send Telemetry Pulse</span>
+            <span className="pulse-btn-text-full">Send Telemetry Pulse</span>
+            <span className="pulse-btn-text-short">Send Pulse</span>
           </button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-            <span style={{ fontSize: '0.725rem', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            <span style={{ fontSize: '0.725rem', opacity: 0.9, display: 'flex', alignItems: 'center', gap: '0.35rem', whiteSpace: 'nowrap' }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981', display: 'inline-block' }} />
               MacPulse Live
             </span>

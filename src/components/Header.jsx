@@ -24,6 +24,17 @@ export default function Header({
     }
   }, [isMobileMenuOpen]);
 
+  // Close mobile navigation drawer on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isMobileMenuOpen]);
+
   const updateIndicator = useCallback(() => {
     if (currentPath !== '/') {
       setIndicatorStyle((prev) => ({ ...prev, opacity: 0 }));
@@ -230,11 +241,10 @@ export default function Header({
           {/* Theme Palette Customizer */}
           <ThemeSelector />
 
-          {/* Resume Button */}
+          {/* Resume Button (Desktop & Tablet) */}
           <button 
             type="button" 
-            className="btn-secondary" 
-            style={{ padding: '0.45rem 0.95rem', fontSize: '0.85rem' }}
+            className="btn-secondary header-resume-btn" 
             onClick={onOpenResume}
             aria-label="View and Download Resume"
           >
@@ -254,6 +264,15 @@ export default function Header({
           </button>
         </div>
       </div>
+
+      {/* Mobile Drawer Backdrop */}
+      {isMobileMenuOpen && (
+        <div 
+          className="mobile-nav-backdrop"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
 
       {/* Mobile Drawer */}
       <div 
@@ -295,10 +314,11 @@ export default function Header({
         >
           Contact
         </a>
-        <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
           <button 
             type="button" 
             className="btn-primary" 
+            style={{ width: '100%', justifyContent: 'center' }}
             onClick={() => { setIsMobileMenuOpen(false); onOpenResume(); }}
           >
             <FileText size={16} />

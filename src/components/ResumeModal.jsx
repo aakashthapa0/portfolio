@@ -71,19 +71,19 @@ export default function ResumeModal({ isOpen, onClose }) {
             <h1 style={{ fontSize: '2.1rem', fontWeight: 800, marginBottom: '0.35rem', letterSpacing: '-0.02em' }}>
               {resumeData.name}
             </h1>
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+            <div className="resume-contact-links">
               <span><MapPin size={14} style={{ display: 'inline', verticalAlign: '-2px' }} /> {resumeData.location}</span>
-              <span>•</span>
+              <span className="resume-dot">•</span>
               <a href={`mailto:${resumeData.email}`} style={{ color: 'var(--text-accent)' }}>
                 <Mail size={14} style={{ display: 'inline', verticalAlign: '-2px' }} /> {resumeData.email}
               </a>
-              <span>•</span>
+              <span className="resume-dot">•</span>
               <span><Phone size={14} style={{ display: 'inline', verticalAlign: '-2px' }} /> {resumeData.phone}</span>
-              <span>•</span>
+              <span className="resume-dot">•</span>
               <a href={resumeData.linkedin} target="_blank" rel="noreferrer" style={{ color: 'var(--text-accent)', textDecoration: 'underline' }}>
                 LinkedIn
               </a>
-              <span>•</span>
+              <span className="resume-dot">•</span>
               <a href={resumeData.github} target="_blank" rel="noreferrer" style={{ color: 'var(--text-accent)', textDecoration: 'underline' }}>
                 GitHub
               </a>
@@ -107,9 +107,9 @@ export default function ResumeModal({ isOpen, onClose }) {
             </h3>
             {resumeData.education.map((edu, idx) => (
               <div key={idx} style={{ marginBottom: '0.85rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 700, color: 'var(--text-primary)' }}>
-                  <span style={{ fontSize: '0.95rem' }}>{edu.institution}, {edu.degree}</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.825rem', color: 'var(--text-accent)' }}>{edu.dates}</span>
+                <div className="resume-item-header">
+                  <span className="resume-item-title" style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)' }}>{edu.institution}, {edu.degree}</span>
+                  <span className="resume-item-dates" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.825rem', color: 'var(--text-accent)' }}>{edu.dates}</span>
                 </div>
                 <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.15rem' }}>
                   {edu.details} — {edu.location}
@@ -125,9 +125,9 @@ export default function ResumeModal({ isOpen, onClose }) {
             </h3>
             {resumeData.experience.map((exp, idx) => (
               <div key={idx} style={{ marginBottom: '1.5rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '1rem' }}>{exp.role}, {exp.company} – {exp.location}</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.825rem', color: 'var(--text-accent)', whiteSpace: 'nowrap' }}>{exp.period}</span>
+                <div className="resume-item-header">
+                  <span className="resume-item-title" style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>{exp.role}, {exp.company} – {exp.location}</span>
+                  <span className="resume-item-dates" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.825rem', color: 'var(--text-accent)', whiteSpace: 'nowrap' }}>{exp.period}</span>
                 </div>
                 <ul style={{ paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.45rem', fontSize: '0.885rem', color: 'var(--text-secondary)', lineHeight: '1.55' }}>
                   {exp.bullets.map((b, bIdx) => (
@@ -146,8 +146,8 @@ export default function ResumeModal({ isOpen, onClose }) {
               </h3>
               {resumeData.featuredProjects.map((proj, idx) => (
                 <div key={idx} style={{ marginBottom: '1.25rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
-                    <span style={{ fontSize: '1rem' }}>{proj.name} — {proj.role}</span>
+                  <div className="resume-item-header">
+                    <span className="resume-item-title" style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>{proj.name} — {proj.role}</span>
                     {proj.github && (
                       <a href={proj.github} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.8rem', color: 'var(--text-accent)', textDecoration: 'underline' }}>
                         GitHub Repo

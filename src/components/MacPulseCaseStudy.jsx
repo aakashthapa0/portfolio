@@ -168,7 +168,7 @@ export default function MacPulseCaseStudy({ onBackToHome }) {
         <section className="case-section">
           <h2>3. Key Architectural Decisions & Tradeoffs</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+          <div className="case-study-cards-grid">
             <div className="glass-panel" style={{ padding: '1.75rem' }}>
               <h3 style={{ fontSize: '1.1rem', color: 'var(--text-accent)', marginBottom: '0.65rem' }}>
                 SQLite WAL vs. External Database
@@ -222,7 +222,7 @@ export default function MacPulseCaseStudy({ onBackToHome }) {
         {/* 4. Limitations & Future Roadmap */}
         <section className="case-section">
           <h2>4. Technical Limitations & Future Engineering Roadmap</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+          <div className="case-study-cards-grid">
             <div className="glass-panel roadmap-card" style={{ padding: '1.75rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: 'var(--accent-blue)', fontWeight: 600, fontSize: '0.8rem' }}>
