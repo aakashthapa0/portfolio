@@ -282,3 +282,19 @@ export const aboutData = {
     }
   ]
 };
+
+export const openSourceData = [
+  {
+    project: "OpenInference",
+    org: "Arize AI",
+    date: "Oct 2026",
+    status: "Merged",
+    title: "Contain token-count failures in the Anthropic streaming extractor",
+    description:
+      "Fixed silent span-data loss in the Anthropic streaming instrumentor: when token-count extraction fails for any reason in the streaming path, the failure is now contained and logged instead of blanking the entire span. Model, messages, role, and finish reason all survive.",
+    stats: ["PR #3902", "+89 / -1 lines", "2 files changed", "4 commits"],
+    tags: ["Python", "OpenTelemetry", "LLM Observability", "Streaming"],
+    prUrl: "https://github.com/Arize-ai/openinference/pull/3902",
+    repoUrl: "https://github.com/Arize-ai/openinference",
+  },
+];

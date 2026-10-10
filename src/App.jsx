@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import MacPulseFeature from './components/MacPulseFeature';
 import Experience from './components/Experience';
 import Capabilities from './components/Capabilities';
+import OpenSource from './components/OpenSource';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -119,6 +120,7 @@ export default function App() {
             />
             <Experience />
             <Capabilities />
+            <OpenSource />
             <About />
             <Contact
               onOpenResume={() => setIsResumeOpen(true)}

@@ -70,7 +70,7 @@ export default function Header({
             return;
           }
 
-          const sections = ['contact', 'about', 'capabilities', 'experience', 'macpulse'];
+          const sections = ['contact', 'about', 'opensource', 'capabilities', 'experience', 'macpulse'];
           const viewportHeight = window.innerHeight;
           const docHeight = document.documentElement.scrollHeight;
 
@@ -215,6 +215,16 @@ export default function Header({
             </li>
             <li>
               <a 
+                ref={(el) => (itemRefs.current['opensource'] = el)}
+                href="#opensource" 
+                className={`nav-link ${activeSection === 'opensource' ? 'active' : ''}`} 
+                onClick={(e) => handleNavClick(e, '#opensource')}
+              >
+                Open Source
+              </a>
+            </li>
+            <li>
+              <a 
                 ref={(el) => (itemRefs.current['about'] = el)}
                 href="#about" 
                 className={`nav-link ${activeSection === 'about' ? 'active' : ''}`} 
@@ -299,6 +309,13 @@ export default function Header({
           onClick={(e) => handleNavClick(e, '#capabilities')}
         >
           Capabilities
+        </a>
+        <a 
+          href="#opensource" 
+          className={`nav-link ${activeSection === 'opensource' ? 'active' : ''}`}
+          onClick={(e) => handleNavClick(e, '#opensource')}
+        >
+          Open Source
         </a>
         <a 
           href="#about" 
