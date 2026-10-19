@@ -2,7 +2,7 @@
 
 Senior Full-Stack Software Engineer with 6+ years of experience architecting high-performance web systems, cloud infrastructure, and AI-powered observability applications.
 
-🌐 **Live Website**: [https://younameit01.github.io/portfolio/](https://younameit01.github.io/portfolio/)
+🌐 **Live Website**: [https://aakashthapa0.github.io/portfolio/](https://aakashthapa0.github.io/portfolio/)
 
 ---
 
