@@ -9,7 +9,7 @@ export const personalInfo = {
   experienceYears: "6+ years",
   location: "Lubbock (Texas), United States",
   phone: "+1 (806) 283-3741",
-  directPdfUrl: `${import.meta.env.BASE_URL}Aakash_Thapa_Resume.pdf`,
+  directPdfUrl: import.meta.env.VITE_RESUME_URL || "https://drive.google.com/uc?export=download&id=1mA25ni456ofIbsykBw1bKGvkUi1cq2RI",
   education: {
     degree: "M.S. in Computer Science (Expected)",
     institution: "Texas Tech University",

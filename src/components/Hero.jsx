@@ -4,7 +4,7 @@ import { personalInfo } from '../data/portfolioData';
 
 const RibbonScene = lazy(() => import('./RibbonScene'));
 
-export default function Hero({ onOpenResume, isMotionPaused }) {
+export default function Hero({ isMotionPaused }) {
   const handleViewMacPulse = (e) => {
     e.preventDefault();
     const elem = document.getElementById('macpulse');
@@ -60,16 +60,18 @@ export default function Hero({ onOpenResume, isMotionPaused }) {
               <ArrowRight size={17} />
             </a>
 
-            <button 
-              type="button" 
+            <a 
+              href={personalInfo.directPdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Aakash_Thapa_Resume.pdf"
               className="btn-secondary" 
-              onClick={onOpenResume}
               id="hero-cta-resume"
-              aria-label="Download and inspect Aakash Thapa resume"
+              aria-label="Download Aakash Thapa resume"
             >
               <Download size={16} />
               <span>Download Resume</span>
-            </button>
+            </a>
           </div>
 
           <div className="hero-interactive-note">

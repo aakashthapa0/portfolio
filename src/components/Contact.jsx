@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Mail, FileText, Check, Copy, Send } from 'lucide-react';
+import { Mail, Download, Check, Copy, Send } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { personalInfo } from '../data/portfolioData';
 
-export default function Contact({ onOpenResume }) {
+export default function Contact() {
   const [copied, setCopied] = useState(false);
 
   const handleCopyEmail = () => {
@@ -73,15 +73,17 @@ export default function Contact({ onOpenResume }) {
               <span>GitHub</span>
             </a>
 
-            <button 
-              type="button" 
+            <a 
+              href={personalInfo.directPdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Aakash_Thapa_Resume.pdf"
               className="contact-btn contact-social-btn"
-              onClick={onOpenResume}
-              aria-label="View and Download Resume"
+              aria-label="Download Aakash Thapa resume"
             >
-              <FileText size={18} />
-              <span>View Resume</span>
-            </button>
+              <Download size={18} />
+              <span>Resume</span>
+            </a>
           </div>
         </div>
       </div>

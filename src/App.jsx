@@ -10,9 +10,8 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import MagicPointerGlow from './components/MagicPointerGlow';
 import { applyTheme, getStoredTheme } from './utils/themeEngine';
-import { initSmoothScroll, stopScroll, startScroll, scrollTo } from './utils/smoothScroll';
+import { initSmoothScroll, scrollTo } from './utils/smoothScroll';
 
-const ResumeModal = lazy(() => import('./components/ResumeModal'));
 const MacPulseCaseStudy = lazy(() => import('./components/MacPulseCaseStudy'));
 
 export default function App() {
@@ -27,7 +26,6 @@ export default function App() {
   };
 
   const [currentPath, setCurrentPath] = useState(getInitialPath);
-  const [isResumeOpen, setIsResumeOpen] = useState(false);
   
   // Initialize motion pause state checking OS prefers-reduced-motion
   const [isMotionPaused, setIsMotionPaused] = useState(() => {
@@ -41,15 +39,6 @@ export default function App() {
   useEffect(() => {
     initSmoothScroll(isMotionPaused);
   }, [isMotionPaused]);
-
-  // Lock background scroll when Resume modal is active
-  useEffect(() => {
-    if (isResumeOpen) {
-      stopScroll();
-    } else {
-      startScroll();
-    }
-  }, [isResumeOpen]);
 
   // Apply stored theme on initial app mount
   useEffect(() => {
@@ -94,7 +83,6 @@ export default function App() {
       <Header
         currentPath={currentPath}
         onNavigate={navigateTo}
-        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -112,7 +100,6 @@ export default function App() {
         ) : (
           <>
             <Hero
-              onOpenResume={() => setIsResumeOpen(true)}
               isMotionPaused={isMotionPaused}
             />
             <MacPulseFeature
@@ -122,25 +109,13 @@ export default function App() {
             <Capabilities />
             <OpenSource />
             <About />
-            <Contact
-              onOpenResume={() => setIsResumeOpen(true)}
-            />
+            <Contact />
           </>
         )}
       </main>
 
       {/* Footer */}
       <Footer />
-
-      {/* Resume Modal */}
-      {isResumeOpen && (
-        <Suspense fallback={null}>
-          <ResumeModal
-            isOpen={isResumeOpen}
-            onClose={() => setIsResumeOpen(false)}
-          />
-        </Suspense>
-      )}
     </div>
   );
 }

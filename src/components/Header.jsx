@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
-import { Menu, X, FileText } from 'lucide-react';
+import { Menu, X, Download } from 'lucide-react';
 import ThemeSelector from './ThemeSelector';
 import { scrollTo, stopScroll, startScroll } from '../utils/smoothScroll';
+import { personalInfo } from '../data/portfolioData';
 
 export default function Header({ 
   currentPath, 
-  onNavigate, 
-  onOpenResume 
+  onNavigate 
 }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -251,16 +251,18 @@ export default function Header({
           {/* Theme Palette Customizer */}
           <ThemeSelector />
 
-          {/* Resume Button (Desktop & Tablet) */}
-          <button 
-            type="button" 
+          {/* Resume Download Button (Desktop & Tablet) */}
+          <a 
+            href={personalInfo.directPdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Aakash_Thapa_Resume.pdf"
             className="btn-secondary header-resume-btn" 
-            onClick={onOpenResume}
-            aria-label="View and Download Resume"
+            aria-label="Download Resume"
           >
-            <FileText size={15} />
+            <Download size={15} />
             <span>Resume</span>
-          </button>
+          </a>
 
           {/* Mobile Menu Hamburger */}
           <button
@@ -332,15 +334,19 @@ export default function Header({
           Contact
         </a>
         <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-          <button 
-            type="button" 
+          <a 
+            href={personalInfo.directPdfUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Aakash_Thapa_Resume.pdf"
             className="btn-primary" 
             style={{ width: '100%', justifyContent: 'center' }}
-            onClick={() => { setIsMobileMenuOpen(false); onOpenResume(); }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Download Resume"
           >
-            <FileText size={16} />
-            <span>View Resume</span>
-          </button>
+            <Download size={16} />
+            <span>Download Resume</span>
+          </a>
 
           {/* Mobile Theme Palette Selector */}
           <ThemeSelector isMobile />
