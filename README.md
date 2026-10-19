@@ -30,7 +30,7 @@ A high-performance macOS storage velocity and daemon observability fleet for dev
 
 ```bash
 # Clone the repository
-git clone https://github.com/younameit01/portfolio.git
+git clone https://github.com/aakashthapa0/portfolio.git
 cd portfolio
 
 # Install dependencies
@@ -51,5 +51,5 @@ npm run build
 ## 📄 License & Contact
 
 - **Author**: [Aakash Thapa](https://www.linkedin.com/in/aakash-thapa-01/)
-- **Email**: [aakashthapa.work@gmail.com](mailto:aakashthapa.work@gmail.com)
+- **Email**: [aakthapa@ttu.edu](mailto:aakthapa@ttu.edu)
 - **License**: MIT

@@ -19,8 +19,8 @@ export const personalInfo = {
   headline: "I build the interface. The engine. And everything between.",
   introduction: "I'm Aakash Thapa, a full-stack software engineer with 6+ years of experience building scalable web, mobile, and AI-powered applications using Python, React, Django, and AWS. Currently pursuing an M.S. in Computer Science at Texas Tech.",
   contacts: {
-    email: "aakashthapa.work@gmail.com",
-    github: "https://github.com/younameit01",
+    email: "aakthapa@ttu.edu",
+    github: "https://github.com/aakashthapa0",
     linkedin: "https://www.linkedin.com/in/aakash-thapa-01/",
   },
 };
@@ -31,7 +31,7 @@ export const macPulseData = {
   tagline: "macOS Storage & System Fleet Observability Platform",
   summary: "A lightweight macOS observability system combining native launchd daemons, a high-throughput FastAPI coordinator, real-time Server-Sent Events (SSE) dashboard updates, and telemetry-grounded Gemini AI diagnosis for high-velocity storage anomalies.",
   status: "Featured Engineering Project",
-  repoUrl: "https://github.com/younameit01/macpulse",
+  repoUrl: "https://github.com/aakashthapa0/macpulse",
   caseStudyPath: "/projects/macpulse",
   architectureStack: [
     { category: "Client Daemon", tech: "macOS Agent (launchd, Swift/Python, APFS Metadata)" },
